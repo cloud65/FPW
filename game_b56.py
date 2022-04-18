@@ -87,11 +87,9 @@ def input_cell(name, color, M):
     print("\n")
     while True:       
         print('\033[A' + " "*70 + '\033[A')
-        str_result = input(text).replace("-", "").replace(" ", "").replace(",", "")[0:2]
-        
-        if not str_result.isdigit():
-            continue
-        
+        str_result = "".join(c for c in input(text) if  c.isdecimal())
+        str_result = str_result[0:2]
+                
         result = (int(str_result)//10, int(str_result)%10)
               
         if 1<=result[0]<=3 and 1<=result[1]<=3 and M[result[0]-1][result[1]-1]==0:
