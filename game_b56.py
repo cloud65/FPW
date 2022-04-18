@@ -52,11 +52,10 @@ def check(M):
         list_none[0].add(M[i][i])
         list_none[1].add(M[i][size-1-i])
 
-    
-
     for row in M:   #Сбор по строкам
         list_res.append(set(row))
         list_none.append(set(row))
+        
     for col in zip(*M):   #Сбор по столбцам
         list_res.append(set(col))
         list_none.append(set(col))
@@ -81,6 +80,7 @@ def input_name(text, color):
        print('\033[A\033[A')
        result = input(text)    
     return result
+    
   
 def input_cell(name, color, M):
     text = f"{color}{name}{get_color()}, введите адрес ячейки [Строка Столбец]: {color}"    
@@ -98,6 +98,7 @@ def input_cell(name, color, M):
             break
       
     return result
+    
     
 def show_result(chk, name1, name2, color1, color2):
     if chk is None:
@@ -118,8 +119,7 @@ def main(size=3):
     print('Введите имена игроков:')
     name1 = input_name("Первый игрок (играет [x]): ", color1)
     name2 = input_name("Второй игрок (играет [o]): ", color2)
-    
-    
+        
     render(M)
     while True:
         i, j = input_cell(name1, color1, M)
@@ -139,12 +139,10 @@ def main(size=3):
         if result!=0:
             show_result(result, name1, name2, color1, color2)
             break
-        
-        
-    
+           
     print(get_color())
 
 
 if __name__ == "__main__":
     main()
-    
+       
