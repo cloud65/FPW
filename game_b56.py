@@ -45,7 +45,6 @@ def check(M):
     list_res = [set(), set()] # Для проверки Победителя или ничьей
     size = len(M)
     for i in range(size):   #Диагонали
-
         list_res[0].add(M[i][i])
         list_res[1].add(M[i][size-1-i])
 
