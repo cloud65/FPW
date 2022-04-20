@@ -42,30 +42,25 @@ def render(M):
     
 
 def check(M):  
-    list_res = [set(), set()] # Для проверки Победителя
-    list_none = [set(), set()] # Для проверки ничьей
+    list_res = [set(), set()] # Для проверки Победителя или ничьей
     size = len(M)
     for i in range(size):   #Диагонали
 
         list_res[0].add(M[i][i])
         list_res[1].add(M[i][size-1-i])
-        list_none[0].add(M[i][i])
-        list_none[1].add(M[i][size-1-i])
 
     for row in M:   #Сбор по строкам
         list_res.append(set(row))
-        list_none.append(set(row))
         
     for col in zip(*M):   #Сбор по столбцам
         list_res.append(set(col))
-        list_none.append(set(col))
     
     for n in list_res: #Ищем победителя
         if {1}==n or {-1}==n:
             return list(n)[0]
     
     is_none = True
-    for n in list_none:
+    for n in list_res: # Ищем ничью
         is_none = is_none and {1, -1}<=n
     if is_none:
         return None
@@ -86,10 +81,10 @@ def input_cell(name, color, M):
     text = f"{color}{name}{get_color()}, введите адрес ячейки [Строка Столбец]: {color}"    
     print("\n")
     while True:       
-        print('\033[A' + " "*70 + '\033[A') # Поднимимя на строку выше, чтобы дублировать приглашение
+        print('\033[A' + " "*70 + '\033[A')
         str_result = "".join(c for c in input(text) if  c.isdecimal())
         str_result = str_result[0:2]
-                
+        
         result = (int(str_result)//10, int(str_result)%10)
               
         if 1<=result[0]<=3 and 1<=result[1]<=3 and M[result[0]-1][result[1]-1]==0:
@@ -143,4 +138,4 @@ def main(size=3):
 
 if __name__ == "__main__":
     main()
-       
+    
