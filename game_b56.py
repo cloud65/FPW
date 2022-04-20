@@ -86,7 +86,7 @@ def input_cell(name, color, M):
     text = f"{color}{name}{get_color()}, введите адрес ячейки [Строка Столбец]: {color}"    
     print("\n")
     while True:       
-        print('\033[A' + " "*70 + '\033[A')
+        print('\033[A' + " "*70 + '\033[A') # Поднимимя на строку выше, чтобы дублировать приглашение
         str_result = "".join(c for c in input(text) if  c.isdecimal())
         str_result = str_result[0:2]
                 
