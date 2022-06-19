@@ -1,2 +1,4 @@
 .gitignore
 virt_env
+__pycache__/
+*.py[cod]
