@@ -16,7 +16,7 @@ class Author(models.Model):
         for post in self.user_posts.all():
             self.rating += post.rating*3
             for comment in  post.comments.all():
-                if comment.user!=self:  # Исключим комментарии автора, т.к. он считается в цикле ниже
+                if comment.user!=self:  # Исключим комментарии автора, т.к. они считается в цикле ниже
                     self.rating += comment.rating            
         
         for comment in self.user.user_comments.all():
