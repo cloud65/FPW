@@ -1,0 +1,35 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %} 
+{% load custom_filters %}
+
+
+{% block title %}
+{{ post.title }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="card w-100">
+  <div class="card-body text-start">
+    <!--<p class="card-text text-secondary">Категории: 
+    {{ post.categories }}
+        {% for category in post.categories %}
+            {{ category }}
+        {% endfor %}
+    </p>-->
+    <h3 class="card-title text-primary">{{ post.title|censor }}</h3>
+    <p class="card-text text-secondary">
+        Дата: <span style='color: blue;'>{{ post.date_create|date:'d.m.Y' }}</span>, 
+        Автор: <span style='color: green; font-weight:bold'>{{ post.author }}</span>
+        {% if is_editable %}
+            {% if is_news %}
+                ( <a href="/news/{{post.pk}}/edit">Изменить</a> | <a href="/news/{{post.pk}}/delete"> Удалить</a> )
+            {% else %}
+                ( <a href="/articles/{{post.pk}}/edit">Изменить</a> | <a href="/articles/{{post.pk}}/delete"> Удалить</a> )
+            {% endif %}
+        {% endif %}
+    </p>
+    <p class="card-text text-dark">{{ post.text|censor|linebreaks }}</p>
+  </div>
+</div>
+{% endblock content %}

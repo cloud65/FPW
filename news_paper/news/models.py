@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -35,9 +36,9 @@ class Category(models.Model):
     
 
 class Post(models.Model):
-    c_news = 1
-    c_article = 2
-    choice_list = [(c_news, "Новость"), (c_article, "Статья")]
+    NEWS = 1
+    ARTICLE = 2
+    choice_list = [(NEWS, "Новость"), (ARTICLE, "Статья")]
         
     author = models.ForeignKey(Author, on_delete = models.CASCADE, related_name='user_posts')
     type_post = models.IntegerField(default=1, choices=choice_list)
@@ -66,6 +67,10 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+        
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
     
 
 class PostCategory(models.Model):
@@ -94,3 +99,6 @@ class Comment(models.Model):
         
     def __str__(self):
         return f"{self.user.username} / {self.post.title[0:30]}: {self.text[0:50]}"
+        
+    def get_absolute_url(self):
+        return reverse('comment_detail', args=[str(self.id)])
