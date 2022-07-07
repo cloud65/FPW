@@ -28,8 +28,8 @@
 					   aria-label="Toggle navigation">
 				   <span class="navbar-toggler-icon"></span>
 			   </button>
-			   <div class="collapse navbar-collapse" id="navbarResponsive">
-				   <ul class="navbar-nav ml-auto">
+			   <div class="navbar-collapse collapse" id="navbarResponsive">
+				   <ul class="nav navbar-nav navbar-left">
 					   <li class="nav-item active">
 						   <a class="nav-link" href="/">Главная</a>
 					   </li>
@@ -39,7 +39,22 @@
 					   <li class="nav-item">
 						   <a class="nav-link" href="/about/">О нас</a>
 					   </li>
-					   
+
+				   </ul>
+				   <ul class="nav navbar-nav navbar-right" style="position: absolute;   right: 0;">
+					   {%  if not request.user.is_authenticated %}
+					   <li class="nav-item">
+						   <a class="nav-link" href="/accounts/login/">Вход</a>
+					   </li>
+					    {% endif %}
+					   {%  if request.user.is_authenticated %}
+					   <li class="nav-item fw-bold fc-white" title="Редактировать профиль">
+						   <a class="nav-link" href="/profile">{{ request.user }}</a>
+					   </li>
+					   <li class="nav-item">
+						   <a class="nav-link" href="/accounts/logout/">Выход</a>
+					   </li>
+					   {% endif %}
 				   </ul>
 			   </div>
 		   </div>
@@ -53,7 +68,7 @@
 			   </div>
 		   </div>
 		</div>
-        
+
         
         
         <script src={% static "js/scripts.js" %}></script>

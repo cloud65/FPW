@@ -1,0 +1,39 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+{{ news.title }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="card w-100">
+  <h2>Страница авторизованного пользователя <b>{{user.username}}</b></h2>
+    <div> E-mail: <span style="color: green">{{user.email}}</span> </div>
+  <div class="card-body text-start">
+    <!--<form action="" method="post">
+        {% csrf_token %}
+        <div> {{ user_form }}</div>
+        <input type="submit" value="Сохранить" />
+    </form>-->
+      <div class="card-text">
+            <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+            <p>{{ user.username }}</p>
+            <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
+            <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+            <p>{{ user.email }} </p>
+
+        {% if not is_author %}
+            <form action="set-author/">
+                <input type="submit" value="Стать автором" />
+            </form>
+        {% else %}
+             <h3>Вы являетесь автором</h3>
+        {% endif %}
+      </div>
+  </div>
+</div>
+{% endblock content %}

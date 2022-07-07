@@ -16,7 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from news import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('news.urls')),
+    path('accounts/', include('allauth.urls')),
+
+    path('profile/', views.userpage, name="userpage"),
+    path('profile/set-author/', views.set_author, name='set_author')
 ]
