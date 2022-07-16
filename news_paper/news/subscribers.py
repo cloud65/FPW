@@ -43,7 +43,8 @@ def send_new_week_categories():
     title = 'Новые публикации за неделю'
     date_min = datetime.now(tz=timezone.utc) - timedelta(days=7)
     posts = Post.objects.filter(date_create__gte=date_min)
-
+    # Выборку ниже я бы предпочел выбрать одним пакетом запросов, но незнаю как.
+    # Поэтому разбиваю на for'ы
     categories = set()
     for post in posts:
         categories = categories | set(post.category.all())
