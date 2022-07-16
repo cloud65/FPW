@@ -22,14 +22,28 @@
         Дата: <span style='color: blue;'>{{ post.date_create|date:'d.m.Y' }}</span>, 
         Автор: <span style='color: green; font-weight:bold'>{{ post.author }}</span>
         {% if is_editable %}
-            {% if is_news %}
-                ( <a href="/news/{{post.pk}}/edit">Изменить</a> | <a href="/news/{{post.pk}}/delete"> Удалить</a> )
-            {% else %}
-                ( <a href="/articles/{{post.pk}}/edit">Изменить</a> | <a href="/articles/{{post.pk}}/delete"> Удалить</a> )
-            {% endif %}
+                ( <a href="/{{str_type}}/{{post.pk}}/edit">Изменить</a> | <a href="/{{str_type}}/{{post.pk}}/delete"> Удалить</a> )
         {% endif %}
     </p>
     <p class="card-text text-dark">{{ post.text|censor|linebreaks }}</p>
+  </div>
+  <div class="card-body row text-start">
+    <div class="col">Категории:</div>
+    {% for  category in post.category.all %}
+        <div class="col">
+            {% if category in category_subscribes %}
+                <div class='text-success fw-bold'> {{category.name}} </div>
+                <div>            
+                <a href="/news/set-subscribe/{{category.pk}}?post={{post.pk}}&unsubscribe=1">Отписаться</a>
+                </div>
+            {% else %}
+                <div class='text-danger'> {{category.name}} </div>
+                <div>
+                <a class="fw-bold" href="/news/set-subscribe/{{category.pk}}?post={{post.pk}}">Подписаться</a>                          
+                </div>
+            {% endif %}              
+        </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock content %}

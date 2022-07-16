@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+<h2>Здравствуй, {{username}}.</h2>
+<h4>Новая {{str_type}} в твоём любимом разделе!</h4>
+<br>
+<h3>{{post.title}}</h3>
+<div>{{ post.text|truncatewords:50 }}<a href="{{url}}">подробнее...</a></div>
+</body>
+</html>

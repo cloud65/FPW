@@ -4,7 +4,7 @@ from allauth.account.forms import SignupForm
 from .models import Post, Comment
 
 
-class BasicSignupForm(SignupForm):
+class BasicSignupForm(SignupForm): # Регистрация нового пользователя средствами allauth
     def save(self, request):
         user = super(BasicSignupForm, self).save(request)
         common_group = Group.objects.get(name='common')
@@ -18,7 +18,7 @@ class UserForm(forms.ModelForm):
         fields = ('username','first_name', 'last_name', 'email')
 
 
-class PostForm(forms.ModelForm):
+class PostForm(forms.ModelForm): # Форма редактирования новости
     class Meta:
         model = Post
         fields = ['title', 'category', 'text']
@@ -28,7 +28,7 @@ class PostForm(forms.ModelForm):
         return cleaned_data
 
 
-class PostComment(forms.ModelForm):
+class PostComment(forms.ModelForm): # Форма редактирования комментария
     class Meta:
         model = Comment
         fields = ['text']

@@ -1,0 +1,5 @@
+Django~=4.0.6
+django-allauth~=0.51.0
+django-filter~=22.1
+APScheduler~=3.9.1
+python-dotenv~=0.20.0

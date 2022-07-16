@@ -3,3 +3,4 @@ virt_env
 win_venv
 __pycache__/
 *.py[cod]
+.env

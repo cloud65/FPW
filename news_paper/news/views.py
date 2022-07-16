@@ -8,10 +8,10 @@ from django.contrib.auth.models import Group
 
 from .filters import PostFilter
 from .forms import PostForm, UserForm
-from .models import Post, Author
+from .models import Post, Author, Category
 
 
-def userpage(request):
+def userpage(request):  # Страница информации о пользователя
     user_form = UserForm(instance=request.user)
     is_author = request.user.groups.filter(name='authors').exists()
     return render(request=request, template_name="user.html",
@@ -19,7 +19,7 @@ def userpage(request):
 
 
 @login_required
-def set_author(request):
+def set_author(request):  # Установка пользователя в автора по нажатии кнопки "profile/set-author"
     user = request.user
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
@@ -68,8 +68,11 @@ class NewsDetail(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_news'] = context['post'].type_post == 1
+        context['str_type'] = 'news' if context['post'].type_post == 1 else 'articles'
         context['is_editable'] = self.request.user.groups.filter(name='authors').exists()
+        context['category_subscribes'] = list(
+            set(context['post'].category.all()) & set(self.request.user.subscribers.all()))
+
         return context
 
 
@@ -85,8 +88,9 @@ class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
             post.author = Author.objects.get(user=self.request.user)
         except Author.DoesNotExist as e:
             raise e
-            # post.author = Author.objects.create(user=self.request.user)
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        # send_categories(post)  # Отправим уведомление подписчикам
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -127,3 +131,19 @@ class PostDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+@login_required
+def set_subscribe(request, category):  # Установка пользователя в подписчики на категорию "news/set-subscribe"
+    user = request.user
+    if request.GET.get('unsubscribe', None):
+        user.subscribers.remove(Category.objects.get(pk=category))
+    else:
+        user.subscribers.add(Category.objects.get(pk=category))
+    user.save()
+
+    try:
+        return_url = '/view/' + request.GET.get('post')
+    except:
+        return_url = '/'
+    return redirect(return_url)

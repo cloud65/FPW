@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+<h2>Здравствуй, {{username}}.</h2>
+<h4>Новости и статьи за прошедшую неделю</h4>
+{%  for post in posts  %}
+    <br>
+    <h3>{{post.title}}</h3>
+    <div>{{ post.text|truncatewords:25 }}<a href="http://{{domain}}/view/{{post.pk}}">подробнее...</a></div>
+{% endfor %}
+</body>
+</html>
