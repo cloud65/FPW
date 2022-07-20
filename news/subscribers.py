@@ -4,7 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import timezone
 
-from news.models import Post, CategorySubscribers
+from news.models import Post
 from news_paper import settings
 
 
@@ -13,7 +13,8 @@ def get_url(post):
     return f'http://{domain}/view/{post.pk}'
 
 
-def send_new_categories(post):
+def send_new_categories(post_id):
+    post = Post.objects.get(pk=post_id)
     categories = list(post.category.all())
     users = set()
     for cat in categories:
